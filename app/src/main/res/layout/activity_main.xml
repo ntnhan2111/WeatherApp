@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://android.com"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F4F8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Thanh tìm kiếm địa điểm bo góc -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@android:drawable/editbox_background_normal"
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_mylocation"
+                android:contentDescription="Icon Định Vị" />
+
+            <EditText
+                android:id="@+id/etCity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="Nhập địa điểm (ví dụ: Hanoi)"
+                android:inputType="textPersonName"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:backgroundTint="#4A80F0"
+                android:text="Tìm"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Lịch sử thành phố đã lưu -->
+        <TextView
+            android:id="@+id/tvRecentCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thành phố vừa tìm: Chưa có"
+            android:textSize="13sp"
+            android:textColor="#757575"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="4dp" />
+
+        <!-- Lưới chức năng chính -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh mục tính năng"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false">
+
+            <Button
+                android:id="@+id/btnMap"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:backgroundTint="#4A80F0"
+                android:text="Bản đồ thời tiết"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnChart"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:backgroundTint="#4A80F0"
+                android:text="Biểu đồ nhiệt độ"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnRank"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:backgroundTint="#4A80F0"
+                android:text="Xếp hạng kỷ lục"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnPredictAI"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:backgroundTint="#6A1B9A"
+                android:text="Dự đoán du lịch AI"
+                android:textSize="13sp" />
+        </GridLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- CẤP QUYỀN HỆ THỐNG: Gọi API thời tiết, API AI Gemini và load bản đồ -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="true">
+
+        <!-- MÀN HÌNH 1: Màn hình chính đầu tiên -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- MÀN HÌNH 2: Chi tiết kết quả thời tiết -->
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+
+        <!-- MÀN HÌNH 3: Trí tuệ nhân tạo Gemini AI du lịch -->
+        <activity
+            android:name=".AiTravelActivity"
+            android:exported="false" />
+
+        <!-- MÀN HÌNH 4: Bảng thống kê xếp hạng kỷ lục nhiệt độ -->
+        <activity
+            android:name=".RankActivity"
+            android:exported="false" />
+
+        <!-- MÀN HÌNH 5: Trực quan đồ thị đường uốn cong MPAndroidChart -->
+        <activity
+            android:name=".ChartActivity"
+            android:exported="false" />
+
+        <!-- MÀN HÌNH 6: Bản đồ động khí quyển Windy -->
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
