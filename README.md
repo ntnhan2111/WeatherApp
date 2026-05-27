@@ -1,4 +1,5 @@
 MỤC ĐÍCH CỦA APP DỰ BÁO THỜI TIẾT
+
 Đối với người học và lập trình viên (Mục đích học tập & phát triển)
 - Luyện tập cấu trúc: Thành thạo ngôn ngữ Java hoặc Kotlin.Kết nối API: Học cách gửi request và nhận dữ liệu JSON từ các dịch vụ thời tiết như OpenWeatherMap.
 - Xử lý bất đồng bộ: Sử dụng Coroutines hoặc RxJava để tải dữ liệu mà không làm đơ giao diện.Thiết kế UI/UX: 
