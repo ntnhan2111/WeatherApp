@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import thick2.appthoitiet_63134898.ApiConfig;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +13,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class DetailActivity extends AppCompatActivity {
@@ -48,9 +47,8 @@ public class DetailActivity extends AppCompatActivity {
         // Nút quay lại
         tvBackBtn.setOnClickListener(v -> finish());
 
-        // Lấy tên thành phố
-        String city =
-                getIntent().getStringExtra("SEARCH_KEY");
+        // Lấy tên thành phố từ MainActivity
+        String city = getIntent().getStringExtra("SEARCH_KEY");
 
         if (city == null || city.isEmpty()) {
             city = "Hanoi";
@@ -63,6 +61,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // Floating Button
         String finalCity = city;
+
         fabMenu.setOnClickListener(v -> {
 
             Intent intent =
@@ -90,19 +89,20 @@ public class DetailActivity extends AppCompatActivity {
 
         try {
 
+            // API Forecast 5 ngày
             url =
-                    "https://api.weatherapi.com/v1/current.json?key="
+                    "https://api.weatherapi.com/v1/forecast.json?key="
                             + ApiConfig.WEATHER_API_KEY
                             + "&q="
-                            + java.net.URLEncoder.encode(city, "UTF-8")
-                            + "&lang=vi";
+                            + URLEncoder.encode(city, "UTF-8")
+                            + "&days=5&lang=vi";
 
         } catch (Exception e) {
 
             e.printStackTrace();
         }
 
-        // Kiểm tra URL
+        // Debug URL
         Log.d("API_URL", url);
 
         JsonObjectRequest request =
@@ -146,7 +146,7 @@ public class DetailActivity extends AppCompatActivity {
                                 String desc =
                                         condition.getString("text");
 
-                                // HIỂN THỊ
+                                // HIỂN THỊ THỜI TIẾT HIỆN TẠI
                                 tvCityNameResult.setText(
                                         cityName + ", " + country
                                 );
@@ -161,8 +161,75 @@ public class DetailActivity extends AppCompatActivity {
                                                 + "\nTốc độ gió: " + wind + " km/h"
                                 );
 
+                                // =========================
+                                // FORECAST 5 NGÀY
+                                // =========================
+
+                                JSONObject forecast =
+                                        response.getJSONObject("forecast");
+
+                                JSONArray forecastday =
+                                        forecast.getJSONArray("forecastday");
+
+                                StringBuilder builder =
+                                        new StringBuilder();
+
+                                for (int i = 0; i < forecastday.length(); i++) {
+
+                                    JSONObject dayObject =
+                                            forecastday.getJSONObject(i);
+
+                                    String date =
+                                            dayObject.getString("date");
+
+                                    JSONObject day =
+                                            dayObject.getJSONObject("day");
+
+                                    double avgTemp =
+                                            day.getDouble("avgtemp_c");
+
+                                    double maxTemp =
+                                            day.getDouble("maxtemp_c");
+
+                                    double minTemp =
+                                            day.getDouble("mintemp_c");
+
+                                    int chanceRain =
+                                            day.getInt("daily_chance_of_rain");
+
+                                    JSONObject conditionDay =
+                                            day.getJSONObject("condition");
+
+                                    String text =
+                                            conditionDay.getString("text");
+
+                                    builder.append("📅 Ngày: ")
+                                            .append(date)
+
+                                            .append("\n🌡 Nhiệt độ TB: ")
+                                            .append(Math.round(avgTemp))
+                                            .append("°C")
+
+                                            .append("\n🔥 Cao nhất: ")
+                                            .append(Math.round(maxTemp))
+                                            .append("°C")
+
+                                            .append("\n❄ Thấp nhất: ")
+                                            .append(Math.round(minTemp))
+                                            .append("°C")
+
+                                            .append("\n☁ Thời tiết: ")
+                                            .append(text)
+
+                                            .append("\n🌧 Khả năng mưa: ")
+                                            .append(chanceRain)
+                                            .append("%")
+
+                                            .append("\n\n");
+                                }
+
                                 tvForecastListResult.setText(
-                                        "Tải dữ liệu thời tiết thành công."
+                                        builder.toString()
                                 );
 
                             } catch (JSONException e) {
@@ -176,6 +243,10 @@ public class DetailActivity extends AppCompatActivity {
                                 tvTempResult.setText("--°C");
 
                                 tvDetailsResult.setText("-");
+
+                                tvForecastListResult.setText(
+                                        "Không đọc được forecast."
+                                );
                             }
 
                         },

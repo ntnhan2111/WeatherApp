@@ -23,7 +23,6 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        // Ánh xạ View
         etMapCity = findViewById(R.id.etMapCity);
 
         btnMapSearch = findViewById(R.id.btnMapSearch);
@@ -31,10 +30,8 @@ public class MapActivity extends AppCompatActivity {
         btnMapHome = findViewById(R.id.btnMapHome);
         btnMapCustom = findViewById(R.id.btnMapCustom);
 
-        // Thành phố mặc định
         etMapCity.setText("Nha Trang");
 
-        // Nút tìm
         btnMapSearch.setOnClickListener(v -> {
 
             String city =
@@ -54,33 +51,41 @@ public class MapActivity extends AppCompatActivity {
             }
         });
 
-        // Nút back
         btnMapBack.setOnClickListener(v -> finish());
 
-        // Nút home
         btnMapHome.setOnClickListener(v ->
                 openGoogleMap("Nha Trang")
         );
 
-        // Nút custom
         btnMapCustom.setOnClickListener(v ->
                 openGoogleMap("Hanoi")
         );
     }
 
-    // Mở Google Maps
     private void openGoogleMap(String city) {
 
-        city = city.replace(" ", "+");
-
         Uri uri = Uri.parse(
-                "https://www.google.com/maps/search/?api=1&query="
-                        + city
+                "geo:0,0?q=" + Uri.encode(city)
         );
 
         Intent intent =
                 new Intent(Intent.ACTION_VIEW, uri);
 
-        startActivity(intent);
+        intent.setPackage(
+                "com.google.android.apps.maps"
+        );
+
+        try {
+
+            startActivity(intent);
+
+        } catch (Exception e) {
+
+            Toast.makeText(
+                    this,
+                    "Chưa cài Google Maps",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 }
